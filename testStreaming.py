@@ -15,7 +15,7 @@ from sklearn.metrics import classification_report
 
 
 # load classifier
-clf = load('eeg-workshop-bremen/model01.joblib')
+clf = load('model01.joblib')
 
 def eeg_power_band(raw: mne.io.RawArray):
     """EEG relative power band feature extraction.
