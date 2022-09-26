@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+
+
+{% block classifier %}
+Random Forest Classifier
+{% endblock %}
+
+{% block code %}
+<script>
+    var labels = [
+        '01',
+        '02',
+        '03',
+        '04',
+        '05',
+        '06',
+    ];
+
+    var data = {
+        labels: labels,
+        datasets: [{
+            label: 'Kanal 01',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 0, 0, 0, 0, 0],
+        },
+        {
+            label: 'Kanal 02',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+        {
+            label: 'Kanal 03',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+        {
+            label: 'Kanal 04',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+        {
+            label: 'Kanal 05',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+        {
+            label: 'Kanal 06',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+        {
+            label: 'Kanal 07',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+        {
+            label: 'Kanal 08',
+            data: [0, 0, 0, 0, 0, 0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgb(255, 99, 132)',
+        },
+
+        ]
+    };
+
+    var config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+    chartEl = document.getElementById('myChart'),
+        chartEl.height = 80;
+
+    var myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+    var socket = new WebSocket('ws://localhost:8001/test1/');
+    socket.onmessage = function (e) {
+        var djangoData = JSON.parse(e.data);
+
+        for (var i = 0; i < 8; ++i) {
+            var newData = config.data.datasets[i].data
+            newData.shift()
+            newData.push(djangoData["value"][i])
+            config.data.datasets[i].data = newData
+        }
+
+
+
+        myChart.update()
+        console.log(djangoData["class"]);
+        document.getElementById("prediction").innerHTML = djangoData["class"];
+    }
+
+//     window.onbeforeunload = function() {
+//     socket.onclose = function () {}; // disable onclose handler first
+//     socket.close();
+// };
+</script>
+
+
+{% endblock %}
