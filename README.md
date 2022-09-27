@@ -6,6 +6,12 @@ by Gaffar and Tobias
 
 Please see following Jupyter Notebook: [EEG Workshop Submission](data-analysis.ipynb)
 
+## Data
+
+The data is located here: https://seafile.zfn.uni-bremen.de/d/26fc1785e10e4470a05f/
+
+Download the folder called "gme2022" and place it here under the relative path "data/gme2022".
+
 ## Links
 
 - https://mne.tools/stable/index.html
