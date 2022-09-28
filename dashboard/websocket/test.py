@@ -76,19 +76,12 @@ async def hello(websocket, path):
     streams = resolve_stream()
     stream =  StreamInlet(streams[0])
     data_list = []
-    counter = 0
     while True:
         data , timestamp = stream.pull_sample()
         data_list.append(data[:8])
         if len(data_list) >= 200*2:
             prediction = run_inference(data_list,clf)
-            if counter >=0 and counter<= 10 :
-                prediction = "baseline"
-            elif counter > 10 and counter <=20:
-                prediction ="ball+number"
-            elif counter > 20 and counter <=30:
-                prediction ="ball"
-            counter+=1
+
             await websocket.send(json.dumps({"value":data_list, "class":prediction.strip('[]').strip('\'')}))
             data_list = []    
             await asyncio.sleep(1)
